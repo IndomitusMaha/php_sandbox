@@ -5,17 +5,23 @@ function pr ($s) {
     print_r($s);
     echo "</pre>";
     
-}*/
+*/
+
+$arMonth = array();
 
 function SetMonth($days, $dayName){
     if (($days>=28) AND ($days<=31)){
         $arDays = array ("Понедельник", "Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье");
         
-        for ($j = 0; $j < $days; $j++){
+        for ($d; $d < count($arDays); $d++){
+            if ($dayName = $arDays[$d]){
+                $d = $start;
+            }
+        }
+        for ($j = $start; $j < $days + $start; $j++){
               if (in_array($dayName, $arDays)){
-                $calendar = array();
-                
-                
+                $i = $j%7;
+                $arMonth = $arDays[$i];                
               } 
               else{
                 echo "Введите корретное название дня недели с большой буквы";
@@ -30,6 +36,6 @@ function SetMonth($days, $dayName){
     } 
     
 }
-SetMonth (30, "Понедеик")
-
+SetMonth (30, "Понедеик");
+pr($arMonth);
 ?>
