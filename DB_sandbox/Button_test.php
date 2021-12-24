@@ -100,9 +100,28 @@
                         
                             }   
                         $mysql->close();
-                        
+                    
+                    /*
+                    $conn = mysqli_connect("localhost", "root", "", "tryjoomla");
+                    // Check connection
+                    if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                    }
+                    $sql = "SELECT id, title, text FROM `xm9wl_mycom`";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                    // output data of each row
+                    while($row = $result->fetch_assoc()) {
+                    echo "<tr><td>" . $row["id"]. "</td><td>" . $row["title"] . "</td><td>"
+                    . $row["text"]. "</td></tr>";
+                    }
+                    echo "</table>";
+                    } else { echo "0 results"; }
+                    $conn->close();*/
                     ?>
-        </table>
+        </table>>
+        
+                    
                     
 <?php
 echo "Do you see me?"
