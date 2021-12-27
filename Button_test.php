@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>My button</title>
+    </head>
+ 
+    <body>
+        <ol> 
+            <li>
+                <a href="Select.php">Select</a> 
+            </li>
+            <li>
+                Delete
+            </li>
+            <li>
+                Update 
+            </li>
+            <li>
+                Insert 
+            </li>
+        </ol>
+        <?php// require_once "Connection_for_Button_test.php";?>
+        
+        <form action="Connection_for_Button_test.php" method="post">
+            <h1>Buttons Test</h1>
+            <p class="comments">Insert the data</p>
+            <p class="comments">Insert the id</p>
+            <div class="form-group">
+                <label for="ID">ID</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id"
+                    name="id"
+                />
+            </div>
+            <p class="comments">Insert the title</p>
+            <div class="form-group">
+                <label for="Title">Title</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                 />
+            </div>
+            <p class="comments">Insert the text</p>
+            <div class="form-group">
+                <label for="Text">Text</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="text"
+                    name="text"
+                />
+            </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="insert" value="INSERT" />
+                <input type="submit" name="update" value="UPDATE" />
+            </div>
+            <div>
+                <div class="form-group">
+                <label for="id_for_deletion">ID</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id_for_deletion"
+                    name="id_for_deletion"
+                />
+                <input type="submit" name="delete" value="DELETE" />
+            </div>
+                   
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Text</th>
+                </tr>
+                    <?php
+                        $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                        if(!$mysql){die('Connection error:'.mysql_error());}
+                                
+                        $sql_query = 'Select id, title, text from `xm9wl_mycom`';
+                        $result = mysqli_query($mysql, $sql_query);
+                        while ($row = mysqli_fetch_assoc($result)){
+                            echo "<tr><td>".$row["id"]."</td><td>".$row["title"]."</td><td>".$row["text"]."</td></tr>";
+                        
+                            }   
+                        $mysql->close();
+                    ?>
+            </table>
+        </form>
+    </body>
+</html>
+
+
