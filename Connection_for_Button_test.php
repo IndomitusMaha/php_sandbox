@@ -16,8 +16,6 @@
             $stmt = $conn->prepare("Insert `xm9wl_mycom` (id, title, text) values(?, ?, ?)");
             $stmt->bind_param("iss", $id, $title, $text); //isss means integer, string, string in order of our 
             $execstmt = $stmt->execute(); 
-            //echo $execstmt;
-            //echo "Data inserted";
             $stmt->close();
             header("Location:http://localhost/DB_sandbox/Show_db.php");
             die();
@@ -46,7 +44,6 @@
             header("Location:http://localhost/DB_sandbox/Show_db.php");
             $conn->close();
             die();
-            
         }
         if (isset($_GET['delete_row'])){
             $id = $_GET['delete_row'];
@@ -58,42 +55,29 @@
             header("Location:http://localhost/DB_sandbox/Show_db.php");
             $conn->close();
             die();
-            
         }
         
         if (isset($_GET['update_row'])){
-            $id = $_POST['id_for_update'];/*
-            $query_title = "Select * `xm9wl_mycom` WHERE id = $id";/*
-            $result_title = $mysqli->query($conn, $query_title) or die($mysqli->error());
-            $row = $result_title->fetch_array();
-            $update_row_title = row['title'];
-            $update_row_text = row['text'];
-            
-                        
-            $query_text = "Select text `xm9wl_mycom` WHERE id = $id";
-            $result_text = mysqli_query($conn, $query_text);
-            $update_row_text = mysqli_fetch_assoc($result_text);*/
-
+            $query_title = "Select * `xm9wl_mycom` WHERE id = $id";
             header("Location:http://localhost/DB_sandbox/Update_row.php");
-            $conn->close();
-            //die();
-            
+            $conn->close(); 
         }
         
         if (isset($_POST['update_row_in_update_row'])){
             //include 'Update_row.php';
             //require_once './Update_row.php';
-            $title = $_POST['title_row'];
             $id = $_POST['id_for_update'];
-            $text = $_POST['text_row'];
+            $title = (string)$_POST['title_row'];            
+            $text = (string)$_POST['text_row'];
             
-       
-            $sql_query = "UPDATE `xm9wl_mycom` Set title = $title,  text = $text where id = $id";
+            /*$sql_query = "UPDATE `xm9wl_mycom` Set title = $title,  text = $text where id = $id";
             $result = mysqli_query($conn, $sql_query);
-            $conn ->query($sql_query);
+            $conn ->query($sql_query);*/
+            $stmt = $conn->prepare("UPDATE `xm9wl_mycom` Set title = ?,  text = ? where id = ?");
+            $stmt->bind_param("ssi", $title, $text, $id);
+            $execstmt = $stmt->execute(); 
+            $stmt->close();
             //echo $sql_query;
-            //echo $id;
-            
             header("Location:http://localhost/DB_sandbox/Show_db.php");
             $conn->close();
             die();
