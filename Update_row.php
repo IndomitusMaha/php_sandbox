@@ -26,10 +26,20 @@
         
         <form action="Connection_for_Button_test.php" method="POST">
             <?php
-            $id_for_update = (string)$_GET['update_row'];
+            $id_for_update = $_GET['update_row'];
             ?>
             <h1>Update data</h1>
             </div>
+            <?php   $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                    if(!$mysql){die('Connection error:'.mysql_error());}
+                   
+                    $title_query = "Select title, text from `xm9wl_mycom` where id = $id_for_update";
+                    $title_query_result = mysqli_query($mysql, $title_query);
+                    $row_title = mysqli_fetch_assoc($title_query_result);
+                    $title = $row_title['title'];
+                    $text = $row_title['text'];
+            ?>
+            
             <div class="form-group">
                 <label for="Your id">Id of your row is <?php echo $id_for_update;?></label>
                 <input
@@ -47,7 +57,7 @@
                     class="form-control"
                     id="title_row"
                     name="title_row"
-                    placeholder ="<?php echo $update_row_title?>"
+                    placeholder ="<?php echo $title; ?>"
                  />
             </div>
             <p class="comments">Insert the text</p>
@@ -58,7 +68,7 @@
                     class="form-control"
                     id="text_row"
                     name="text_row"
-                    placeholder="<?php echo $update_row_text?>"
+                    placeholder="<?php echo $text?>"
                 />
             </div>
             </div>

@@ -62,8 +62,8 @@
         }
         
         if (isset($_GET['update_row'])){
-            /*$id = $_GET['update_row'];
-            $query_title = "Select * `xm9wl_mycom` WHERE id = $id";
+            $id = $_POST['id_for_update'];/*
+            $query_title = "Select * `xm9wl_mycom` WHERE id = $id";/*
             $result_title = $mysqli->query($conn, $query_title) or die($mysqli->error());
             $row = $result_title->fetch_array();
             $update_row_title = row['title'];
@@ -75,7 +75,7 @@
             $update_row_text = mysqli_fetch_assoc($result_text);*/
 
             header("Location:http://localhost/DB_sandbox/Update_row.php");
-            //$conn->close();
+            $conn->close();
             //die();
             
         }
