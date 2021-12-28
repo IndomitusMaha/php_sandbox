@@ -6,40 +6,55 @@
     </head>
  
     <body>
+        <?php //require_once './Connection_for_Button_test.php';?>
+        <div class="container"> 
         <ul> 
             <li>
-                <a href="Select.php">Select</a> 
+                <a href="Select.php" class="btn btn-secondary">Select</a> 
             </li>
             <li>
-                 <a href="Delete.php">Delete</a> 
+                 <a href="Delete.php" class="btn btn-secondary">Delete</a> 
             </li>
             <li>
-                <a href="Update.php">Update</a> 
+                <a href="Update.php" class="btn btn-secondary">Update</a> 
             </li>
             <li>
-                <a href="Insert.php">Insert</a>  
+                <a href="Insert.php" class="btn btn-secondary">Insert</a>  
             </li>
         </ul>
+       
         <form action="Connection_for_Button_test.php" method="post">
-            <h1>Content</h1>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Text</th>
-                </tr>
-                    <?php
-                        $mysql = mysqli_connect('localhost','root','','tryjoomla');
-                        if(!$mysql){die('Connection error:'.mysql_error());}
-                                
-                        $sql_query = 'Select id, title, text from `xm9wl_mycom`';
-                        $result = mysqli_query($mysql, $sql_query);
-                        while ($row = mysqli_fetch_assoc($result)){
-                            echo "<tr><td>".$row["id"]."</td><td>".$row["title"]."</td><td>".$row["text"]."</td></tr>";
-                        
-                        }   
-                        $mysql->close();
-                    ?>
+            <h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspContent</h1>
+            <div class="row justify-content-center">
+                <table> 
+                <thead>
+                    <tr>
+                        <th>ID&nbsp</th>
+                        <th>Title &nbsp&nbsp&nbsp&nbsp</th>
+                        <th>Text  &nbsp&nbsp&nbsp&nbsp</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <?php
+                    $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                    if(!$mysql){die('Connection error:'.mysql_error());}
+                   
+                    $sql_query = 'Select id, title, text from `xm9wl_mycom` order by id';
+                    $result = mysqli_query($mysql, $sql_query);
+                    while ($row = mysqli_fetch_assoc($result)):?>
+                        <tr>
+                            <td><?php echo $row['id']?></td>
+                            <td><?php echo $row['title']?></td>
+                            <td><?php echo $row['text']?></td>
+                            <td>
+                                <a href="Update_row.php?update_row=<?php echo $row['id']; ?>" class="btn btn-info">Update</a>
+                                <a href="Show_db.php?delete_row=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>                           
+                <?php endwhile;?>          
             </table>
+            </div>
+        </form>
+        </div>
     </body>
 </html>
