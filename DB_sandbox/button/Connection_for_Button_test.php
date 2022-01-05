@@ -46,15 +46,17 @@
             die();
         }
         if (isset($_POST['delete_row'])){
-            //$id = (int)$_POST['delete_row'];
+            $id = (int)$_POST['delete_row'];
             echo $_POST['delete_row'];
-            //header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
-            /*
+            
+            
             $stmt = $conn->prepare("DELETE FROM `xm9wl_mycom` WHERE id = ?");
             $stmt->bind_param("i", $id);
             $execstmt = $stmt->execute(); 
             $stmt->close();
-            
+            header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
+            $conn->close();
+            die();
             /*
             $sql_query = "DELETE FROM `xm9wl_mycom` WHERE id = $id";
             $result = mysqli_query($conn, $sql_query);
@@ -62,8 +64,7 @@
             //$conn ->query($sql_query);
             //echo $sql_query;
             */
-            //$conn->close();
-            //die();
+          
         }
         
         if (isset($_GET['update_row'])){
