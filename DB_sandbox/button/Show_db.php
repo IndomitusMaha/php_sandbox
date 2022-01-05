@@ -48,10 +48,12 @@
                                 
                                 <button name="update_row" type="submit" value="<?php echo $row['id']?>"  class="btn btn-info">Update</button>
                                 <button name="delete_row" type="submit" value="<?php echo $row['id']?>"  class="btn btn-danger">Delete</button>
+                                
                                 <!--<button name="update" type="submit" value="update" 
                                         formaction="location.href='http://localhost/DB_sandbox/button/Update_row.php" class="btn btn-info">Update </button>-->                                
                                 <!--<a href="Update_row.php?update_row=<?php //echo $row['id']; ?>" class="btn btn-info">Update</a>
                                 <a href="Connection_for_Button_test.php?delete_row=<?php //echo $row['id']; ?>" class="btn btn-danger">Delete</a>-->
+                            
                             </td>
                         </tr>                           
                 <?php endwhile;?>          

@@ -22,15 +22,13 @@
                 <a href="Insert.php">Insert</a> 
             </li>
         </ol>
-        <?php// include "Connection_for_Button_test.php";?>
+        <?php include 'Connection_for_Button_test.php';?>
         
         <form action="Connection_for_Button_test.php" method="POST">
-            <?php
-            $id_for_update = $_GET['update_row'];
-            ?>
+            
             <h1>Update data</h1>
             </div>
-            <?php   $mysql = mysqli_connect('localhost','root','','tryjoomla');
+            <?php   /*$mysql = mysqli_connect('localhost','root','','tryjoomla');
                     if(!$mysql){die('Connection error:'.mysql_error());}
                    
                     $title_query = "Select title, text from `xm9wl_mycom` where id = $id_for_update";
@@ -38,15 +36,17 @@
                     $row_title = mysqli_fetch_assoc($title_query_result);
                     $title = $row_title['title'];
                     $text = $row_title['text'];
+             */
             ?>
             
             <div class="form-group">
-                <label for="Your id">Id of your row is <?php echo $id_for_update;?></label>
+                <label for="Your id">Id of your row is <?php //echo $id_for_update;?></label>
+                <label for="Your id">Id of your row is <?php echo $GLOBALS['id'];?></label>
                 <input
                     type="hidden"
                     class="form-control"
                     name="id_for_update"
-                    value="<?php echo $id_for_update?>"
+                    value="<?php $GLOBALS['id']//echo $id_for_update?>"
                  />
             </div>
             <p class="comments">Insert the title</p>

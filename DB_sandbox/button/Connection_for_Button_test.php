@@ -26,8 +26,6 @@
             $id = $_POST['id_for_deletion'];
             $sql_query = "DELETE FROM `xm9wl_mycom` WHERE id = $id";
             $result = mysqli_query($conn, $sql_query);
-            //echo $execstmt;
-            //echo "Data deleted";
             header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
             die();
         }
@@ -38,9 +36,7 @@
             $text = $_POST['text'];
             
             $sql_query = "UPDATE `xm9wl_mycom` Set title = $title,  text = $text where id = $id";
-            $result = mysqli_query($conn, $sql_query);
-            //$conn ->query($sql_query);
-            //echo $sql_query;
+            $result = mysqli_query($conn, $sql_query);;
             header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
             $conn->close();
             die();
@@ -49,50 +45,37 @@
             $id = (int)$_POST['delete_row'];
             echo $_POST['delete_row'];
             
-            
             $stmt = $conn->prepare("DELETE FROM `xm9wl_mycom` WHERE id = ?");
             $stmt->bind_param("i", $id);
             $execstmt = $stmt->execute(); 
             $stmt->close();
             header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
             $conn->close();
-            die();
-            /*
-            $sql_query = "DELETE FROM `xm9wl_mycom` WHERE id = $id";
-            $result = mysqli_query($conn, $sql_query);
-            echo $sql_query; 
-            //$conn ->query($sql_query);
-            //echo $sql_query;
-            */
-          
+            die();  
         }
         
-        if (isset($_GET['update_row'])){
-            $query_title = "Select * `xm9wl_mycom` WHERE id = $id";
-            header("Location:http://localhost/DB_sandbox/Button/Update_row.php");
-            $conn->close(); 
+        if (isset($_POST['update_row'])){
+            $id_for_update = (int)$_POST['update_row'];
+            $GLOBALS['id_global'] = (int)$_POST['update_row'];
+            $GLOBALS['id_for_update'] = (int)$_POST['update_row'];
+            header("Location:http://localhost/DB_sandbox/Button/Update_row.php"); 
         }
         
         if (isset($_POST['update_row_in_update_row'])){
-            //include 'Update_row.php';
-            //require_once './Update_row.php';
-            $id = $_POST['id_for_update'];
+            
+            //$id = $_POST['id_for_update'];
+            //$id = $_POST['update_row'];
             $title = (string)$_POST['title_row'];            
             $text = (string)$_POST['text_row'];
             
-            /*$sql_query = "UPDATE `xm9wl_mycom` Set title = $title,  text = $text where id = $id";
-            $result = mysqli_query($conn, $sql_query);
-            $conn ->query($sql_query);*/
+            //$stmt = $conn->prepare("UPDATE `xm9wl_mycom` Set title = ?,  text = ? where id = ?");
+            //$stmt->bind_param("ssi", $title, $text, $id);
             $stmt = $conn->prepare("UPDATE `xm9wl_mycom` Set title = ?,  text = ? where id = ?");
-            $stmt->bind_param("ssi", $title, $text, $id);
+            $stmt->bind_param("ssi", $title, $text, $GLOBALS['id']);
+            
             $execstmt = $stmt->execute(); 
             $stmt->close();
             header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
             $conn->close();
             die();
         }
-        
-        if (isset($_POST['update'])){
-            echo "Button worked";
-        }
-        
