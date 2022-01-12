@@ -1,6 +1,5 @@
 <?php
         $title = '';
-        $id = '';
         $text = '';
         $select = '';
         $select2 = '';
@@ -59,21 +58,20 @@
             $GLOBALS['id_global'] = (int)$_POST['update_row'];
             $GLOBALS['id_for_update'] = (int)$_POST['update_row'];
             //include './Update_row.php'; 
+            require_once './Update_row.php'; 
             
         }
         
         if (isset($_POST['update_row_in_update_row'])){
             
-            //$id = $_POST['id_for_update'];
+            $id = $_POST['id_for_update'];
             //$id = $_POST['update_row'];
             $title = (string)$_POST['title_row'];            
             $text = (string)$_POST['text_row'];
+            //echo $id ."<br>".$title."<br>".$text ."<br>";
             
-            //$stmt = $conn->prepare("UPDATE `xm9wl_mycom` Set title = ?,  text = ? where id = ?");
-            //$stmt->bind_param("ssi", $title, $text, $id);
             $stmt = $conn->prepare("UPDATE `xm9wl_mycom` Set title = ?,  text = ? where id = ?");
-            $stmt->bind_param("ssi", $title, $text, $GLOBALS['id']);
-            
+            $stmt->bind_param("ssi", $title, $text, $id);
             $execstmt = $stmt->execute(); 
             $stmt->close();
             header("Location:http://localhost/DB_sandbox/Button/Show_db.php");
