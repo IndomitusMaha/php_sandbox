@@ -21,9 +21,9 @@
                 <a href="Insert.php">Insert</a> 
             </li>
         </ol>
-        <?php// require_once "Connection_for_Button_test.php";?>
+        <?php //include "Conntroller_Button.php";?>
         
-        <form action="Connection_for_Button_test.php" method="post">
+        <form action="../controllers/update.php" method="post">
             <h1>Update data</h1>
             <p class="comments">Insert the id</p>
             <div class="form-group">
@@ -57,6 +57,7 @@
             </div>
             </div>
             <div class="form-group">
+                <p class="comments">    </p>
                 <input type="submit" name="update" value="UPDATE" />
             </div>
     </body>

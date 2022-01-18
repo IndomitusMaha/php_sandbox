@@ -23,7 +23,7 @@
         </ol>
         <?php// require_once "Connection_for_Button_test.php";?>
         
-        <form action="Connection_for_Button_test.php" method="post">
+        <form action="../controllers/Conntroller_Button.php" method="post">
             <h1>Insert data</h1>
             <p class="comments">Insert the id</p>
             <div class="form-group">

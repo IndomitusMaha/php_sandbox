@@ -5,7 +5,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </head>
     <body>
-        <?php include 'Connection_for_Button_test.php'; ?>
+        <?php include "../controllers/Conntroller_Button.php"; ?>
         <div class="container"> 
         <ul> 
             <li>
@@ -21,7 +21,7 @@
                 <a href="Insert.php" class="btn btn-secondary">Insert</a>  
             </li>
         </ul>
-            <form action="Connection_for_Button_test.php" method="post">
+            <form action="../controllers/Conntroller_Button.php" method="get">
             <h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspContent</h1>
             <div class="row justify-content-center">
@@ -31,8 +31,7 @@
                         <th>ID&nbsp</th>
                         <th>Title &nbsp&nbsp&nbsp&nbsp</th>
                         <th>Text  &nbsp&nbsp&nbsp&nbsp</th>
-                        <th>Status1  &nbsp&nbsp&nbsp&nbsp</th>
-                        <th>Status2  &nbsp&nbsp&nbsp&nbsp</th>
+                        <th>Status  &nbsp&nbsp&nbsp&nbsp</th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -47,43 +46,29 @@
                             <td><?php echo $row['id']?></td>
                             <td><?php echo $row['title']?></td>
                             <td><?php echo $row['text']?></td>
-                            <td><select name="status1" type="submit" class="btn btn-info">
-                                <?php 
-                                if ($row['status'] == 'loaded') { echo'<option value="loaded"> Loaded </option>'
-                                .'<option value="completed"> Completed </option>'
-                                .'<option value=" another"> Another </option>';}
-                                ?>
-                                <?php 
-                                if ($row['status'] == 'completed') { echo'<option value="completed"> Completed </option>'
-                                .'<option value="loaded"> Loaded </option>'
-                                .'<option value=" another"> Another </option>';}
-                                ?>
-                                    
-                                </select>
-                            </td>
-                            <td><select name="status2" type="submit" class="btn btn-info">
-                                    
-                                <?php 
-                                if ($row['status'] == 'loaded') { $first = 'Loaded'; $second = 'Completed'; $third = 'Another';}
-                                elseif ($row['status'] == 'completed') { $first = 'Completed'; $second = 'Loaded'; $third = 'Another';}
-                                else { $first = 'Another'; $second = 'Loaded'; $third = 'Completed';}?>
-                                
-                                <option value="<?php echo $first?>"> <?php echo $first?> </option>
-                                <option value="<?php echo $second ?>"> <?php echo $second ?></option>
-                                <option value=" <?php echo $third ?>"> <?php echo $third ?></option>
-                                
-                                </select>
-                            </td>
                             <td>
                                 <button name="change_status" type="submit" value="<?php echo $row['id']?>"  class="btn btn-info">Change status</button>
                             </td>
-                            <td>
+                            <!--<td>
                                 
                                 <button name="update_row" type="submit" value="<?php echo $row['id']?>"  class="btn btn-success">Update</button>
                                 <button name="delete_row" type="submit" value="<?php echo $row['id']?>"  class="btn btn-danger">Delete</button>
                             
+                            </td>-->
+                            <td><select name="status<?php echo $row['id']?>" type="submit" class="btn btn-info">
+                                    
+                      
+                                    <?php $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
+                                    $result_2 = mysqli_query($mysql, $sql_query_2);
+                                    while ($row_2 = mysqli_fetch_assoc($result_2)):?>
+                                    
+                                    <?php if($row['status'] == $row_2['status']){echo '<option value="'.$row_2['status'].'" selected="selected" >'.$row_2['status'].'</option>';}
+                                    else { echo '<option value="'.$row_2['status'].'">'.$row_2['status'].'</option>';}?> 
+                                    <?php endwhile;?>
+                                </select>
+                                
+                                
                             </td>
-                            
                         </tr>                           
                 <?php endwhile;?>          
             </table>

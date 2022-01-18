@@ -7,24 +7,24 @@
         
         <ol>
             <li>
-                <a href="Show_db.php">Show the table</a> 
+                <a href="../views/Show_db.php">Show the table</a> 
             </li>
             <li>
-                <a href="Select.php">Select</a> 
+                <a href="../views/Select.php">Select</a> 
             </li>
             <li>
-                <a href="Delete.php">Delete</a> 
+                <a href="../views/Delete.php">Delete</a> 
             </li>
             <li>
-                <a href="Update.php">Update</a> 
+                <a href="../views/Update.php">Update</a> 
             </li>
             <li>
-                <a href="Insert.php">Insert</a> 
+                <a href="../views/Insert.php">Insert</a> 
             </li>
         </ol>
-        <?php include 'Connection_for_Button_test.php';?>
+        <?php include "Conntroller_Button.php";?>
         
-        <form action="Connection_for_Button_test.php" method="POST">
+        <form action="update_row.php" method="POST">
             
             <h1>Update data</h1>
             </div>
@@ -72,7 +72,9 @@
             </div>
             </div>
             <div class="form-group">
+                <p class="comments">    </p>
                 <input type="submit" name="update_row_in_update_row" value="UPDATE" />
+
             </div>
     </body>
 </html>

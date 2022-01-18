@@ -23,7 +23,7 @@
                 <a href="Insert.php">Insert</a>  
             </li>
         </ol>
-        <form action="Connection_for_Button_test.php" method="post">
+        <form action="controllers/Conntroller_Button.php" method="post">
             <h1>Select data</h1>
             <div>
                 <div class="form-group">
