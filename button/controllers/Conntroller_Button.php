@@ -1,7 +1,8 @@
 <?php
         $conn = new mysqli('localhost','root','','tryjoomla');
 	if(!$conn){die('Connection error:'.mysql_error());}
-
+        
+        //require_once './radio_button.php';
         
         if (isset($_POST['insert'])){
             require_once './insert.php';
@@ -27,9 +28,12 @@
             require_once './change_status.php';
         }
         
+        
+        
         if (isset($_GET['change_status'])){
             require_once './change_status_get.php';
         }
+        
         /*
         if (isset($_GET['delete_row'])){
             require_once './delete_row.php';

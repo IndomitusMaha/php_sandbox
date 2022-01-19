@@ -31,9 +31,10 @@
                         <th>ID&nbsp&nbsp&nbsp&nbsp</th>
                         <th>Title &nbsp&nbsp&nbsp&nbsp</th>
                         <th>Text  &nbsp&nbsp&nbsp&nbsp</th>
+                        <th>Bool  &nbsp&nbsp&nbsp&nbsp</th>
                         <th>Status  &nbsp&nbsp&nbsp&nbsp</th>
-                        <th colspan="3">Action</th>
                         <th colspan="2">Radiobuttons  &nbsp&nbsp&nbsp&nbsp</th>
+                        <th colspan="3">Action</th>
                         <th colspan="2">Checkboxes  &nbsp&nbsp&nbsp&nbsp</th>
                         <th>Textarea  &nbsp&nbsp&nbsp&nbsp</th>
                         
@@ -43,15 +44,17 @@
                     $mysql = mysqli_connect('localhost','root','','tryjoomla');
                     if(!$mysql){die('Connection error:'.mysql_error());}
                    
-                    $sql_query = 'Select id, title, text, status from `xm9wl_mycom` order by id';
+                    $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id';
                     $result = mysqli_query($mysql, $sql_query);
                     while ($row = mysqli_fetch_assoc($result)):?>
                         <tr>
+                            <input type="hidden" class="form-control" name="id_for_row" value="<?php echo $row['id']?>" />
                             <td><?php echo $row['id']?></td>
                             <td><?php echo $row['title']?></td>
                             <td><?php echo $row['text']?></td>
+                            <td><?php echo $row['bool']?></td>
                             <!--<td><select name="status" type="submit" class="btn btn-info">-->
-                            <td><select name="status" type="submit" class="btn btn-info">
+                            <td><select name="status<?php echo $row['id']?>" type="submit" class="btn btn-info">
                                
                                     <?php 
                                     $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
@@ -67,6 +70,15 @@
                                     ?>
                                 </select>
                             </td>
+                            </td>
+                            <td>
+                                <input type="radio" name="radio<?php echo $row['id']?>" value="1">
+                                <label > Set bool to 1</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="radio<?php echo $row['id']?>" value="0">
+                                <label > Set bool to 0</label>
+                            </td>
                             <td>
                                 <button name="change_status" type="submit" value="<?php echo $row['id']?>"  class="btn btn-info">Change status</button>
                             </td>
@@ -77,14 +89,6 @@
                             <td>
                                 <button name="delete_row" type="submit" value="<?php echo $row['id']?>"  class="btn btn-danger">Delete</button>
                             
-                            </td>
-                            <td>
-                                <input type="radio" name="first_radio<?php echo $row['id']?>" value="<?php echo $row['id']?>">
-                                <label > 1st radio for <?php echo $row['id']?></label>
-                            </td>
-                            <td>
-                                <input type="radio" name="first_radio<?php echo $row['id']?>" value="<?php echo $row['id']?>">
-                                <label > 2nd radio for <?php echo $row['id']?></label>
                             </td>
                             <td>
                                 <input type="checkbox" id="1" name="first_checkbox" checked>
