@@ -3,8 +3,8 @@
         <title>My button</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </head>
-    <body>
+     </head>
+    <body style = "background-color: #f3f3f3;">
         <?php include "../controllers/Conntroller_Button.php";?>
         <div class="container"> 
         <ul> 
@@ -49,7 +49,7 @@
                     $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id'; //limit 0, 6 was deleted
                     $result = mysqli_query($mysql, $sql_query);
                     while ($row = mysqli_fetch_assoc($result)):?>
-                        <tr>
+                        <tr style = "border-bottom: 1px solid #dddddd; background-color: lightgrey; border-bottom: 2px solid #009879;  ">
                             <input type="hidden" class="form-control" name="id_for_row" value="<?php echo $row['id']?>" />
                             <td><?php echo $row['id']?></td>
                             <td><?php echo $row['title']?></td>
@@ -103,7 +103,7 @@
                                 <label for="second_checkbox">2nd checkbox</label>
                             </td>
                             <td>
-                                <textarea id="txtid" name="txtname" rows="2" cols="20" maxlength="50"> Placeholder
+                                <textarea id="txtid" name="txtname" rows="2" cols="20" maxlength="50" style = "background-color: #f3f3f3;"> Placeholder
                                 </textarea>
                             </td>
                         </tr>                           
