@@ -4,6 +4,8 @@
         
         //require_once './radio_button.php';
         
+        $progres_bar = 50;
+        
         if (isset($_POST['insert'])){
             require_once './insert.php';
         }
