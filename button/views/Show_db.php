@@ -46,7 +46,7 @@
                     $mysql = mysqli_connect('localhost','root','','tryjoomla');
                     if(!$mysql){die('Connection error:'.mysql_error());}
                    
-                    $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id';
+                    $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id'; //limit 0, 6 was deleted
                     $result = mysqli_query($mysql, $sql_query);
                     while ($row = mysqli_fetch_assoc($result)):?>
                         <tr>
@@ -68,7 +68,7 @@
                             <td><select name="status<?php echo $row['id']?>" type="submit" class="btn btn-info">
                                
                                     <?php 
-                                    $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id ';
+                                    $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
                                     $result_2 = mysqli_query($mysql, $sql_query_2);
                                     while ($row_2 = mysqli_fetch_assoc($result_2)):
                                     
@@ -124,12 +124,16 @@
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1">Previous</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <?php for($counter=1;$counter<4;$counter++){ ?>
+     
             <li class="page-item">
+                <a class="page-link" href="Show_db.php?page=1"><?php if ($counter == 1){echo "1 <span class='sr-only'>(current)</span>";} else {echo $counter;}?></a></li>
+            <!--<li class="page-item active">
+                <a class="page-link" href="#">2<span class="sr-only">(current)</span></a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a></li>
+            <li class="page-item"> -->
+                <?php }?>
                 <a class="page-link" href="#">Next</a>
             </li>
         </ul>
