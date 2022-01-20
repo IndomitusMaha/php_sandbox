@@ -13,7 +13,10 @@ if (isset($_POST['update_row_in_update_row'])){
             $stmt->bind_param("ssi", $title, $text, $id);
             $execstmt = $stmt->execute(); 
             $stmt->close();
-            header("Location:http://localhost/DB_sandbox2/php_sandbox/Button/views/Show_db.php");
+            header('Location:http://localhost/DB_sandbox2/php_sandbox/Button/views/Show_db.php');
+            /*
+            $page = (STRING)$_POST['Page'];
+            header('Location:http://localhost/DB_sandbox2/php_sandbox/Button/views/Show_db.php?page='.$page);*/
             $conn->close();
             die();
 }

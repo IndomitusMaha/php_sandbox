@@ -5,7 +5,16 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
      </head>
     <body style = "background-color: #f3f3f3;">
-        <?php include "../controllers/Conntroller_Button.php";?>
+        <?php include "../controllers/Conntroller_Button.php";
+        //FOR PAGINATION
+        $results_per_page = 6;
+        if (!isset($_GET['page'])) {
+        $page = 1;
+        } else {
+        $page = $_GET['page'];
+        }
+        $this_page_first_result = ($page-1)*$results_per_page;
+        //END OF SECTION FOR PAGINATION?>
         <div class="container"> 
         <ul> 
             <li>
@@ -22,6 +31,7 @@
             </li>
         </ul>
             <form action="../controllers/Conntroller_Button.php" method="post">
+                <input type="hidden" name="Page" value="<?php echo $page;?>"></input>
             <h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 Content
@@ -46,7 +56,7 @@
                     $mysql = mysqli_connect('localhost','root','','tryjoomla');
                     if(!$mysql){die('Connection error:'.mysql_error());}
                    
-                    $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id'; //limit 0, 6 was deleted
+                    $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
                     $result = mysqli_query($mysql, $sql_query);
                     while ($row = mysqli_fetch_assoc($result)):?>
                         <tr style = "border-bottom: 1px solid #dddddd; background-color: lightgrey; border-bottom: 2px solid #009879;  ">
@@ -121,20 +131,27 @@
     </body>
     <nav aria-label="...">
         <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            <li class="page-item <?php if ((int)$page == 1){echo "disabled";}?>">
+                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page-1;?>" tabindex="-1">Previous</a>
             </li>
-            <?php for($counter=1;$counter<4;$counter++){ ?>
-     
-            <li class="page-item">
-                <a class="page-link" href="Show_db.php?page=1"><?php if ($counter == 1){echo "1 <span class='sr-only'>(current)</span>";} else {echo $counter;}?></a></li>
+            <?php 
+            $sql_query_3 = 'Select count(id) from `xm9wl_mycom`';
+            $result_3 = mysqli_query($mysql, $sql_query_3);
+            $assoc_mas = mysqli_fetch_assoc($result_3);
+            $number_of_results = $assoc_mas['count(id)'];
+            $number_of_pages = ceil($number_of_results/$results_per_page)+1;
+            
+            for($counter=1;$counter<$number_of_pages;$counter++){ ?>
+            
+            <li class="page-item <?php if ($counter == (int)$page){echo "active";}?>">
+                <a class="page-link" href="Show_db.php?page=<?php echo $counter;?>"><?php echo $counter;?></a></li>
             <!--<li class="page-item active">
                 <a class="page-link" href="#">2<span class="sr-only">(current)</span></a></li>
             <li class="page-item">
-                <a class="page-link" href="#">3</a></li>
-            <li class="page-item"> -->
-                <?php }?>
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" href="#">3</a></li>-->
+            <?php }?>
+            <li class="page-item <?php if ((int)$page == $number_of_pages-1){echo "disabled";}?>"> 
+                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page+1;?>"><?php if ((int)$page == $number_of_pages-1){echo "You shall not pass!";} else {echo 'Next';}?></a>
             </li>
         </ul>
     </nav>
