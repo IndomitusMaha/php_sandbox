@@ -15,6 +15,7 @@ $bool = (int)str_replace($id_for_dropdown, '', $pre_bool);
 $stmt_bool = $conn->prepare("UPDATE `xm9wl_mycom` Set bool = ? where id = ?");
 $stmt_bool->bind_param("ii", $bool, $id_for_dropdown);
 $execstmt_bool = $stmt_bool->execute(); 
+//echo $pre_bool.' '.$bool.' '.$pre_status.' '.$id_for_dropdown;
 
 $page = $_POST['Page'];
 header('Location:http://localhost/DB_sandbox2/php_sandbox/Button/views/Show_db.php?page='.$page);

@@ -1,6 +1,8 @@
 <?php
         $conn = new mysqli('localhost','root','','tryjoomla');
 	if(!$conn){die('Connection error:'.mysql_error());}
+        $mysql = mysqli_connect('localhost','root','','tryjoomla');
+        if(!$mysql){die('Connection error:'.mysql_error());}
         
         $progres_bar = 50;
         
@@ -26,6 +28,10 @@
         
         if (isset($_POST['change_status'])){
             require_once './change_status.php';
+        }
+        
+        if (isset($_POST['find'])){
+            require_once './find.php';
         }
         
         

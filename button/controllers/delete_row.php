@@ -2,8 +2,10 @@
 
 $id = (int)$_POST['delete_row'];
 //echo $_POST['delete_row'];
-            
+/*            
 $stmt = $conn->prepare("DELETE FROM `xm9wl_mycom` WHERE id = ?");
+$stmt->bind_param("i", $id);*/
+$stmt = $conn->prepare("UPDATE `xm9wl_mycom` SET status = 'deleted' WHERE id = ?");
 $stmt->bind_param("i", $id);
 $execstmt = $stmt->execute(); 
 $stmt->close();

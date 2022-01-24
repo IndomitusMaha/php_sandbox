@@ -72,14 +72,69 @@
                 </a>  
             </li>
         </ul>
-            <form action="../controllers/Conntroller_Button.php" method="post">
-                <input type="hidden" name="Page" value="<?php echo $page;?>"></input>
             <h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 Content
             </h1>
+            <div >
+            <table>
+                <tr style = "border-bottom: 1px solid #dddddd; background-color: DarkGray;">
+                    <form action="../controllers/Conntroller_Button.php" method="post">
+                        <input type="hidden" class="form-control" name="this_page_first_result" value= "<?php echo $this_page_first_result?>" />
+                        <input type="hidden" class="form-control" name="results_per_page" value="<?php echo $results_per_page?>" />
+                        <?php 
+                        $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                        if(!$mysql){die('Connection error:'.mysql_error());}
+                        
+                        if(isset($_GET['find'])){
+                            if ($_GET['find'] == "'all'"){
+                                $find = '';
+                            }
+                            else{
+                            $find = " and status = ".$_GET['find']." ";
+                            $find_for_option = $_GET['find'];
+                            }
+                        }
+                        else{
+                            $find = ' ';
+                        }
+
+                        $sql_query = "Select id, title, text, status, bool from `xm9wl_mycom` Where status <> 'deleted' ".$find.' order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
+                        $result = mysqli_query($mysql, $sql_query);
+                        ?>
+                        <td><label style="font-weight:bold;" > Status&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label></td>
+                        <td>
+                            <select name="status_find" type="submit" class="btn btn-info">
+                                <?php 
+                                $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
+                                $result_2 = mysqli_query($mysql, $sql_query_2);
+                                
+                                while ($row_2 = mysqli_fetch_assoc($result_2)):
+                                if($row_2['status'] !== 'deleted'){
+                                    if ("'".$row_2['status']."'" == $find_for_option){
+                                        echo '<option value="'.$row_2['status'].'" selected = "selected" >'.$row_2['status'].'</option>';
+                                    }
+                                    else{
+                                        echo '<option value="'.$row_2['status'].'" >'.$row_2['status'].'</option>';
+                                }
+                                }  
+                                endwhile;
+                                ?>
+                                <option value="all" <?php if(!isset($_GET['find'])){ echo "selected = 'selected'";} 
+                                                          if(isset($_GET['find'])){if($_GET['find'] == "'all'") {echo "selected = 'selected'";}}?> >ALL</option>
+                            </select>
+                        </td>
+                        <td>
+                                <button name="find" type="submit" value="lol"  class="btn btn-secondary">Find</button>
+                        </td>
+                    </form>
+                </tr>
+               
+            </table>
+            </div>
+            
             <div class="row justify-content-center">
-                <table> 
+            <table>
                 <thead>
                     <tr style="background:grey;">
                         <th>ID&nbsp&nbsp&nbsp&nbsp</th>
@@ -95,26 +150,29 @@
                     </tr>
                 </thead>
                 <?php
-                    $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                    /*$mysql = mysqli_connect('localhost','root','','tryjoomla');
                     if(!$mysql){die('Connection error:'.mysql_error());}
                    
                     $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
-                    $result = mysqli_query($mysql, $sql_query);
+                    $result = mysqli_query($mysql, $sql_query);*/
                     while ($row = mysqli_fetch_assoc($result)):?>
                         <tr style = "border-bottom: 1px solid #dddddd; background-color: lightgrey; border-bottom: 2px solid #009879;  ">
+                            <form action="../controllers/Conntroller_Button.php" method="post">
+                            <input type="hidden" name="Page" value="<?php echo $page;?>"></input>
+                            
                             <input type="hidden" class="form-control" name="id_for_row" value="<?php echo $row['id']?>" />
+                            
                             <td><?php echo $row['id']?></td>
                             <td><?php echo $row['title']?></td>
                             <td><?php echo $row['text']?></td>
                             <td><?php echo $row['bool']?></td>
                             <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                            <!--<td><select name="status" type="submit" class="btn btn-info">-->
                             <td>
-                                <input type="radio" name="radio<?php echo $row['id']?>" value="1">
+                                <input type="radio" name="radio<?php echo $row['id']?>" <?php if( $row['bool'] == 1){echo " checked ";}?> value="1">
                                 <label > Set bool to 1</label>
                             </td>
                             <td>
-                                <input type="radio" name="radio<?php echo $row['id']?>" value="0">
+                                <input type="radio" name="radio<?php echo $row['id']?>" <?php if( $row['bool'] == 0){echo " checked ";}?> value="0">
                                 <label > Set bool to 0</label>
                             </td>
                             <td><select name="status<?php echo $row['id']?>" type="submit" class="btn btn-info">
@@ -167,18 +225,14 @@
                                 <textarea id="txtid" name="txtname" rows="2" cols="20" maxlength="50" style = "background-color: #f3f3f3;"> Placeholder
                                 </textarea>
                             </td>
-                        </tr>                           
+                        </form>
+                        </tr>
+                      
                 <?php endwhile;?>          
             </table>
             </div>
-        </form>
         </div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progres_bar?>%">
-                <span class="sr-only">70% Complete</span>
-            </div>
-        </div>        
+
     </body>
     <!--<ul class="breadcrumb">
         <li><a href="#">Show_db</a></li>
@@ -186,31 +240,38 @@
         <li><a href="#">Something else</a></li>
         <li>Current page</li>
     </ul>-->
-    <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item <?php if ((int)$page == 1){echo "disabled";}?>">
-                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page-1;?>" tabindex="-1">Previous</a>
-            </li>
-            <?php 
-            $sql_query_3 = 'Select count(id) from `xm9wl_mycom`';
+        <?php 
+            $sql_query_3 = "Select count(id) from `xm9wl_mycom` Where status <> 'deleted' ".$find;
             $result_3 = mysqli_query($mysql, $sql_query_3);
             $assoc_mas = mysqli_fetch_assoc($result_3);
             $number_of_results = $assoc_mas['count(id)'];
-            $number_of_pages = ceil($number_of_results/$results_per_page)+1;
+            $number_of_pages = ceil($number_of_results/$results_per_page)+1;?>
+    
+    <div class="progress">
+        <?php $progres_bar_arithmetic = (int)$page/((int)$number_of_pages-1)*100?>
+        <div class="progress-bar" role="progressbar" aria-valuenow="100"
+            aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progres_bar_arithmetic//$progres_bar?>%">
+            <span class="sr-only">70% Complete</span>
+        </div>
+    </div>
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item <?php if ((int)$page == 1){echo "disabled";}?>">
+                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page-1;?><?php if(isset($_GET['find'])){echo '&find='.$_GET['find'];} ?>" tabindex="-1">Previous</a>
+            </li>
             
-            for($counter=1;$counter<$number_of_pages;$counter++){ ?>
+            
+        <?php for($counter=1;$counter<$number_of_pages;$counter++){ ?>
             
             <li class="page-item <?php if ($counter == (int)$page){echo "active";}?>">
-                <a class="page-link" href="Show_db.php?page=<?php echo $counter;?>"><?php echo $counter;?></a></li>
-            <!--<li class="page-item active">
-                <a class="page-link" href="#">2<span class="sr-only">(current)</span></a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a></li>-->
-            <?php }?>
+                <a class="page-link" href="Show_db.php?page=<?php echo $counter;?><?php if(isset($_GET['find'])){echo '&find='.$_GET['find'];} ?>" ><?php echo $counter;?></a></li>
+        <?php }?>
             <li class="page-item <?php if ((int)$page == $number_of_pages-1){echo "disabled";}?>"> 
-                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page+1;?>"><?php if ((int)$page == $number_of_pages-1){echo "You shall not pass!";} else {echo 'Next';}?></a>
+                <a class="page-link" href="Show_db.php?page=<?php echo (int)$page+1;?><?php if(isset($_GET['find'])){echo '&find='.$_GET['find'];} ?>" ><?php if ((int)$page == $number_of_pages-1){echo "You shall not pass!";} else {echo 'Next';}?></a>
             </li>
         </ul>
+        
     </nav>
+    
     
 </html>
