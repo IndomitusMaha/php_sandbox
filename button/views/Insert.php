@@ -1,3 +1,8 @@
+<?php
+session_start();
+echo session_id();
+
+?>
 <html>
     <head>
         <title>My button</title>
@@ -9,10 +14,10 @@
                 <a href="Show_db.php">Show the table</a> 
             </li>
             <li>
-                <a href="Select.php">Select</a> 
+                <a href="Select.php">Select <?php echo session_id() ;?></a> 
             </li>
             <li>
-                <a href="Delete.php">Delete</a> 
+                <a href="Delete.php">Delete <?php echo $_SESSION['logged_in_user_id']?></a> 
             </li>
             <li>
                 <a href="Update.php">Update</a>  

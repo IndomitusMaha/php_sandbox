@@ -1,3 +1,10 @@
+<?php
+session_id(13);
+session_start();
+echo time();
+echo $_SESSION['LAST_ACTIVITY'];
+?>
+
 <html>
     <head>
         <title>My button</title>
@@ -27,7 +34,8 @@
         </style>
     </head>
     <body style = "background-color: #f3f3f3;">
-        <?php include "../controllers/Conntroller_Button.php";
+        <?php 
+        include "../controllers/Conntroller_Button.php";
         //FOR PAGINATION
         $results_per_page = 6;
         if (!isset($_GET['page'])) {
@@ -36,7 +44,8 @@
         $page = $_GET['page'];
         }
         $this_page_first_result = ($page-1)*$results_per_page;
-        //END OF SECTION FOR PAGINATION?>
+        //END OF SECTION FOR PAGINATION
+        ?>
         <div class="container"> 
         <ul> 
             <!--<li>
@@ -76,32 +85,85 @@
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 Content
             </h1>
+                <?php 
+                        $mysql = mysqli_connect('localhost','root','','tryjoomla');
+                        if(!$mysql){die('Connection error:'.mysql_error());}
+                        
+                        if(isset($_GET['find'])) //GET
+                        {
+                            if ($_GET['find'] == "'all'")
+                            {
+                                $find = ' ';
+                            }
+                            else
+                            {
+                                $find = " and status = ".$_GET['find']." ";
+                                $find_for_option = $_GET['find'];
+                            }
+                        }
+                        else
+                        {
+                            if(isset($_SESSION['status']))  // SESSION
+                            {
+                                if ($_SESSION['status'] == "'all'")
+                                {
+                                    $find = ' ';
+                                }
+                                else
+                                {
+                                    $find = " and status = ".$_SESSION['status']." ";
+                                    $find_for_option = $_SESSION['status'];
+                                }
+                            }
+                            else
+                            {
+                                $find = ' ';
+                            }
+                        }
+                        
+                        $sql_query = "Select id, title, text, status, bool from `xm9wl_mycom` Where status <> 'deleted' ".$find.' order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
+                        $result = mysqli_query($mysql, $sql_query);
+                        ?>
             <div >
             <table>
                 <tr style = "border-bottom: 1px solid #dddddd; background-color: DarkGray;">
                     <form action="../controllers/Conntroller_Button.php" method="post">
                         <input type="hidden" class="form-control" name="this_page_first_result" value= "<?php echo $this_page_first_result?>" />
                         <input type="hidden" class="form-control" name="results_per_page" value="<?php echo $results_per_page?>" />
-                        <?php 
-                        $mysql = mysqli_connect('localhost','root','','tryjoomla');
-                        if(!$mysql){die('Connection error:'.mysql_error());}
                         
-                        if(isset($_GET['find'])){
-                            if ($_GET['find'] == "'all'"){
-                                $find = '';
-                            }
-                            else{
-                            $find = " and status = ".$_GET['find']." ";
-                            $find_for_option = $_GET['find'];
-                            }
-                        }
-                        else{
-                            $find = ' ';
-                        }
-
-                        $sql_query = "Select id, title, text, status, bool from `xm9wl_mycom` Where status <> 'deleted' ".$find.' order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
-                        $result = mysqli_query($mysql, $sql_query);
-                        ?>
+                        <td><label style="font-weight:bold;" > Status&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label></td>
+                        <td>
+                            <select name="status_find_thrue_get" type="submit" class="btn btn-info">
+                                <?php 
+                                $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
+                                $result_2 = mysqli_query($mysql, $sql_query_2);
+                                
+                                while ($row_2 = mysqli_fetch_assoc($result_2)):
+                                if($row_2['status'] !== 'deleted'){
+                                    if ("'".$row_2['status']."'" == $find_for_option){
+                                        echo '<option value="'.$row_2['status'].'" selected = "selected" >'.$row_2['status'].'</option>';
+                                    }
+                                    else{
+                                        echo '<option value="'.$row_2['status'].'" >'.$row_2['status'].'</option>';
+                                }
+                                }  
+                                endwhile;
+                                ?>
+                                <option value="all" <?php if($find == ' '){echo "selected = 'selected'";}
+                                                          if(!isset($_SESSION['status'])){ echo "selected = 'selected'";} 
+                                                          if(isset($_SESSION['status'])){if($_SESSION['status'] == "'all'") {echo "selected = 'selected'";}}?> >ALL</option>
+                            </select>
+                        </td>
+                        <td>
+                                <button name="find_thrue_session" type="submit" value="lol"  class="btn btn-secondary" style="height:40px; width:250px;">Find using SESSION variable</button>
+                        </td>
+                    </form>
+                </tr>
+                <tr style = "border-bottom: 1px solid #dddddd; background-color: DarkGray;">
+                    <form action="../controllers/Conntroller_Button.php" method="post">
+                        <input type="hidden" class="form-control" name="this_page_first_result" value= "<?php echo $this_page_first_result?>" />
+                        <input type="hidden" class="form-control" name="results_per_page" value="<?php echo $results_per_page?>" />
+                        
                         <td><label style="font-weight:bold;" > Status&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label></td>
                         <td>
                             <select name="status_find" type="submit" class="btn btn-info">
@@ -120,12 +182,14 @@
                                 }  
                                 endwhile;
                                 ?>
-                                <option value="all" <?php if(!isset($_GET['find'])){ echo "selected = 'selected'";} 
+                                <option value="all" <?php if($find == ' '){echo "selected = 'selected'";}
+                                                          if(!isset($find)){echo "selected = 'selected'";}
+                                                          //if(!isset($_GET['find'])){echo "selected = 'selected'";} 
                                                           if(isset($_GET['find'])){if($_GET['find'] == "'all'") {echo "selected = 'selected'";}}?> >ALL</option>
                             </select>
                         </td>
                         <td>
-                                <button name="find" type="submit" value="lol"  class="btn btn-secondary">Find</button>
+                                <button name="find" type="submit" value="lol"  class="btn btn-secondary" style="height:40px; width:250px;">Find using GET request</button>
                         </td>
                     </form>
                 </tr>
@@ -258,8 +322,7 @@
         <ul class="pagination">
             <li class="page-item <?php if ((int)$page == 1){echo "disabled";}?>">
                 <a class="page-link" href="Show_db.php?page=<?php echo (int)$page-1;?><?php if(isset($_GET['find'])){echo '&find='.$_GET['find'];} ?>" tabindex="-1">Previous</a>
-            </li>
-            
+            </li> 
             
         <?php for($counter=1;$counter<$number_of_pages;$counter++){ ?>
             

@@ -34,6 +34,9 @@
             require_once './find.php';
         }
         
+        if (isset($_POST['find_thrue_session'])){
+            require_once './find_thrue_session.php';
+        }
         
         
         if (isset($_GET['change_status'])){
