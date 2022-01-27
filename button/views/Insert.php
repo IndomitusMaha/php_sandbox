@@ -1,7 +1,9 @@
 <?php
 session_start();
-echo session_id();
-
+if(isset($_SESSION['last_search']))
+{
+    $_SESSION['start_of_time_away'] = time();
+}
 ?>
 <html>
     <head>
@@ -9,23 +11,26 @@ echo session_id();
     </head>
  
     <body>
-        <ol>
-            <li>
-                <a href="Show_db.php">Show the table</a> 
-            </li>
-            <li>
-                <a href="Select.php">Select <?php echo session_id() ;?></a> 
-            </li>
-            <li>
-                <a href="Delete.php">Delete <?php echo $_SESSION['logged_in_user_id']?></a> 
-            </li>
-            <li>
-                <a href="Update.php">Update</a>  
-            </li>
-            <li>
-                <a href="Insert.php">Insert</a> 
-            </li>
-        </ol>
+        <form action="../controllers/Conntroller_Button.php" method="post">
+            <ol>
+                <li>
+                        <button name="show_db_redirect" type="submit"   class="btn btn-success">Show the table</button>
+                        <!--<a href="Show_db.php">Show the table</a>-->
+                </li>
+                <li>
+                    <a href="Select.php">Select <?php echo session_id() ;?></a> 
+                </li>
+                <li>
+                    <a href="Delete.php">Delete <?php echo $_SESSION['logged_in_user_id']?></a> 
+                </li>
+                <li>
+                    <a href="Update.php">Update</a>  
+                </li>
+                <li>
+                    <a href="Insert.php">Insert</a> 
+                </li>
+            </ol>
+        </form>
         <?php// require_once "Connection_for_Button_test.php";?>
         
         <form action="../controllers/Conntroller_Button.php" method="post">

@@ -1,26 +1,36 @@
+<?php
+session_start();
+if(isset($_SESSION['last_search']))
+{
+    $_SESSION['start_of_time_away'] = time();
+}
+?>
 <html>
     <head>
         <title>My button</title>
     </head>
  
     <body>
-        <ol>
-            <li>
-                <a href="Show_db.php">Show the table</a> 
-            </li>
-            <li>
-                <a href="Select.php">Select</a> 
-            </li>
-            <li>
-                <a href="Delete.php">Delete</a> 
-            </li>
-            <li>
-                <a href="Update.php">Update</a> 
-            </li>
-            <li>
-                <a href="Insert.php">Insert</a> 
-            </li>
-        </ol>
+        <form action="../controllers/Conntroller_Button.php" method="post">
+            <ol>
+                <li>
+                    <button name="show_db_redirect" type="submit"   class="btn btn-success">Show the table</button>
+                    <!--<a href="Show_db.php">Show the table</a>-->
+                </li>
+                <li>
+                    <a href="Select.php" class="btn btn-success">Select</a> 
+                </li>
+                <li>
+                    <a href="Delete.php" class="btn btn-success">Delete</a> 
+                </li>
+                <li>
+                    <a href="Update.php" class="btn btn-success">Update</a> 
+                </li>
+                <li>
+                    <a href="Insert.php" class="btn btn-success">Insert</a> 
+                </li>
+            </ol>
+        </form>
         <?php //include "Conntroller_Button.php";?>
         
         <form action="../controllers/update.php" method="post">

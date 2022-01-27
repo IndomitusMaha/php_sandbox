@@ -38,6 +38,10 @@
             require_once './find_thrue_session.php';
         }
         
+        if (isset($_POST['show_db_redirect'])){
+            require_once './show_db_redirect.php';
+        }
+        
         
         if (isset($_GET['change_status'])){
             require_once './change_status_get.php';

@@ -1,12 +1,59 @@
 <?php
 session_id(13);
-session_start();
-echo time();
-echo $_SESSION['LAST_ACTIVITY'];
+session_start();   
+$_SESSION['current'] = time();
+                /*
+                unset($_SESSION['status']);
+                unset($_SESSION['last_search']);
+                unset($_SESSION['time_limit']);
+                unset($_SESSION['time_spent_away']);
+                unset($_SESSION['start_of_time_away']);
+                unset($_SESSION['end_of_time_away']);
+                */
+ 
+ 
 ?>
 
 <html>
     <head>
+        <?php
+        
+        if(isset($_SESSION['last_search']))
+        {   
+            $_SESSION['time_limit'] = 5;
+            
+            if(isset($_SESSION['start_of_time_away']))
+            {   
+                $_SESSION['time_spent_away'] = $_SESSION['end_of_time_away'] - $_SESSION['start_of_time_away'];
+                $_SESSION['time_limit'] = 5 + $_SESSION['time_spent_away'];
+                /*echo $_SESSION['start_of_time_away']."</br>";
+                echo $_SESSION['end_of_time_away']."</br>";
+                echo $_SESSION['time_spent_away']."</br>";
+                echo $_SESSION['time_limit']."</br>";
+                echo $_SESSION['current']."</br>";
+                echo $_SESSION['last_search']."</br>";*/
+                
+                
+            }
+            
+            if (($_SESSION['current'] - $_SESSION['last_search']) > $_SESSION['time_limit']) 
+            {   
+                //echo 'session variables are unset';
+                unset($_SESSION['status']);
+                unset($_SESSION['last_search']);
+                unset($_SESSION['time_limit']);
+                unset($_SESSION['time_spent_away']);
+                unset($_SESSION['start_of_time_away']);
+                unset($_SESSION['end_of_time_away']);
+            }
+            else 
+            {
+                //$refresh = "<meta http-equiv='refresh' content='3' >"; // ÅÑËÈ ÐÀÑÊÎÌÌÅÍÒÈÐÎÂÀÒÜ ÝÒÎ ÒÎ ÑÒÐÀÍÈÖÀ ÁÓÄÅÒ ÑÀÌÎÎÁÍÎÂËßÒÑß
+                //echo $refresh;    
+            }
+        }
+        
+        ?> 
         <title>My button</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -104,7 +151,7 @@ echo $_SESSION['LAST_ACTIVITY'];
                         else
                         {
                             if(isset($_SESSION['status']))  // SESSION
-                            {
+                            {   //$_SESSION['last_search'] = time();
                                 if ($_SESSION['status'] == "'all'")
                                 {
                                     $find = ' ';
@@ -133,7 +180,7 @@ echo $_SESSION['LAST_ACTIVITY'];
                         
                         <td><label style="font-weight:bold;" > Status&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label></td>
                         <td>
-                            <select name="status_find_thrue_get" type="submit" class="btn btn-info">
+                            <select name="status_find_thrue_session" type="submit" class="btn btn-info">
                                 <?php 
                                 $sql_query_2 = 'Select distinct status from `xm9wl_mycom` order by id';
                                 $result_2 = mysqli_query($mysql, $sql_query_2);
@@ -219,6 +266,7 @@ echo $_SESSION['LAST_ACTIVITY'];
                    
                     $sql_query = 'Select id, title, text, status, bool from `xm9wl_mycom` order by id limit'.' '.$this_page_first_result.', '.$results_per_page; //limit 0, 6 was deleted
                     $result = mysqli_query($mysql, $sql_query);*/
+                    //sleep(3);
                     while ($row = mysqli_fetch_assoc($result)):?>
                         <tr style = "border-bottom: 1px solid #dddddd; background-color: lightgrey; border-bottom: 2px solid #009879;  ">
                             <form action="../controllers/Conntroller_Button.php" method="post">
@@ -335,6 +383,4 @@ echo $_SESSION['LAST_ACTIVITY'];
         </ul>
         
     </nav>
-    
-    
-</html>
+</html> 
