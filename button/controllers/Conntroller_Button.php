@@ -43,6 +43,7 @@
         }
         
         
+        //          ***GET***
         if (isset($_GET['change_status'])){
             require_once './change_status_get.php';
         }

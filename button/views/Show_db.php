@@ -1,5 +1,5 @@
 <?php
-session_id(13);
+//session_id(13);
 session_start();   
 $_SESSION['current'] = time();
                 /*
@@ -8,10 +8,8 @@ $_SESSION['current'] = time();
                 unset($_SESSION['time_limit']);
                 unset($_SESSION['time_spent_away']);
                 unset($_SESSION['start_of_time_away']);
-                unset($_SESSION['end_of_time_away']);
-                */
- 
- 
+                unset($_SESSION['end_of_time_away']);*/
+                
 ?>
 
 <html>
@@ -20,21 +18,15 @@ $_SESSION['current'] = time();
         
         if(isset($_SESSION['last_search']))
         {   
-            $_SESSION['time_limit'] = 5;
+            $_SESSION['time_limit'] = 120;
             
-            if(isset($_SESSION['start_of_time_away']))
+            /*if(isset($_SESSION['start_of_time_away']))
             {   
                 $_SESSION['time_spent_away'] = $_SESSION['end_of_time_away'] - $_SESSION['start_of_time_away'];
-                $_SESSION['time_limit'] = 5 + $_SESSION['time_spent_away'];
-                /*echo $_SESSION['start_of_time_away']."</br>";
-                echo $_SESSION['end_of_time_away']."</br>";
-                echo $_SESSION['time_spent_away']."</br>";
-                echo $_SESSION['time_limit']."</br>";
-                echo $_SESSION['current']."</br>";
-                echo $_SESSION['last_search']."</br>";*/
-                
-                
-            }
+                $_SESSION['time_limit'] = 5 + $_SESSION['time_spent_away']; 
+               
+            }еякх пюяйнллемрхпнбюрэ щрнр йсянй, рн мю бпелъ пюанрш б дпсцнл нйме дюммше янупAмъряъ,
+            х рюилеп гюосярхряъ гюмнбн*/ 
             
             if (($_SESSION['current'] - $_SESSION['last_search']) > $_SESSION['time_limit']) 
             {   
@@ -45,11 +37,24 @@ $_SESSION['current'] = time();
                 unset($_SESSION['time_spent_away']);
                 unset($_SESSION['start_of_time_away']);
                 unset($_SESSION['end_of_time_away']);
-            }
+            } //щрнр йсянй яапюяшбюер пегскэрюрш онхяйю вепег оърэ яейсмд оняке бундю б щрн нймн
+            
+            if(isset($_SESSION['start_of_time_away'])) 
+            {
+                if (($_SESSION['end_of_time_away'] - $_SESSION['start_of_time_away']) > 5)
+                    {
+                        unset($_SESSION['status']);
+                        unset($_SESSION['last_search']);
+                        unset($_SESSION['time_limit']);
+                        unset($_SESSION['time_spent_away']);
+                        unset($_SESSION['start_of_time_away']);
+                        unset($_SESSION['end_of_time_away']);
+                    } // щрнр йсянй яапюяшбюер пегскэрюрш онхяйю оняке оърх яейсмд опеашбюмхъ б дпсцнл нйме
+            } 
             else 
             {
-                //$refresh = "<meta http-equiv='refresh' content='3' >"; // еякх пюяйнллемрхпнбюрэ щрн рн ярпюмхжю асдер яюлннамнбкъряъ
-                //echo $refresh;    
+                //$refresh = "<meta http-equiv='refresh' content='3' >"; 
+                //echo $refresh; // еякх пюяйнллемрхпнбюрэ щрн рн ярпюмхжю асдер яюлннамнбкъряъ  йюфдше рпх яейсмдш 
             }
         }
         
@@ -383,4 +388,5 @@ $_SESSION['current'] = time();
         </ul>
         
     </nav>
+    
 </html> 

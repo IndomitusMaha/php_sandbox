@@ -2,7 +2,9 @@
 session_start();
 if(isset($_SESSION['last_search']))
 {
-    $_SESSION['start_of_time_away'] = time();
+    $_SESSION['start_of_time_away'] = time(); // ÝÒÀ ÏÅÐÅÌÅÍÍÀß ÍÓÆÍÀ ÄËß ÑÎÕÐÀÍÅÍÈß ÄÀÍÍÛÕ ÂÎ ÂÐÅÌß ÐÀÁÎÒÛ Â ÄÐÓÃÎÌ ÎÊÍÅ
+    //unset ($_SESSION['status']);
+    //unset ($_SESSION['last_search']); // ÝÒÎÒ ÊÓÑÎÊ ÑÁÐÀÑÛÂÀÅÒ ÐÅÇÓËÜÒÀÒ ÏÎÈÑÊÀ ÏÐÈ ÎÒÊÐÛÒÈÈ ÝÒÎÃÎ ÎÊÍÀ
 }
 ?>
 <html>
